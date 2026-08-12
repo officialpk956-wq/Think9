@@ -1,0 +1,48 @@
+[
+  {
+    "gstin": "24AAACR5055K1Z5",
+    "name": "Rajkot Glass Works",
+    "supplies": [
+      "glass bottles"
+    ]
+  },
+  {
+    "gstin": "27AABCS1429B1ZQ",
+    "name": "Shree Packaging Industries",
+    "supplies": [
+      "caps",
+      "pumps",
+      "jars"
+    ]
+  },
+  {
+    "gstin": "24AACCG9862P1ZX",
+    "name": "Gujarat Glass & Containers",
+    "supplies": [
+      "glass bottles"
+    ]
+  },
+  {
+    "gstin": "27AAECM4521N1ZK",
+    "name": "Mumbai Flexipack",
+    "supplies": [
+      "pouches",
+      "labels"
+    ]
+  },
+  {
+    "gstin": "27AADCE7734L1ZR",
+    "name": "Everest Cartons",
+    "supplies": [
+      "cartons"
+    ]
+  },
+  {
+    "gstin": "29AAGCD2287M1ZP",
+    "name": "Deccan Closures",
+    "supplies": [
+      "caps",
+      "pumps"
+    ]
+  }
+]

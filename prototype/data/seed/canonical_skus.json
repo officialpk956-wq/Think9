@@ -1,0 +1,93 @@
+[
+  {
+    "id": "GLS-AMB-050-20",
+    "description": "50ml amber glass bottle, 20mm neck",
+    "moq": 2500,
+    "attrs": {
+      "material": "glass",
+      "colour": "amber",
+      "form": "bottle",
+      "volume_ml": 50,
+      "neck_mm": 20,
+      "closure_included": false
+    }
+  },
+  {
+    "id": "GLS-AMB-100-24",
+    "description": "100ml amber glass bottle, 24mm neck",
+    "moq": 1500,
+    "attrs": {
+      "material": "glass",
+      "colour": "amber",
+      "form": "bottle",
+      "volume_ml": 100,
+      "neck_mm": 24
+    }
+  },
+  {
+    "id": "GLS-AMB-048-20",
+    "description": "48ml amber glass bottle, 20mm neck",
+    "moq": 3000,
+    "attrs": {
+      "material": "glass",
+      "colour": "amber",
+      "form": "bottle",
+      "volume_ml": 48,
+      "neck_mm": 20
+    }
+  },
+  {
+    "id": "CAP-PP-20-WHT",
+    "description": "20mm white PP screw cap",
+    "moq": 2000,
+    "attrs": {
+      "material": "PP",
+      "colour": "white",
+      "form": "cap",
+      "neck_mm": 20
+    }
+  },
+  {
+    "id": "PMP-LOT-24-WHT",
+    "description": "24mm white lotion pump",
+    "moq": 600,
+    "attrs": {
+      "material": "PP",
+      "colour": "white",
+      "form": "pump",
+      "neck_mm": 24
+    }
+  },
+  {
+    "id": "JAR-PET-200-70",
+    "description": "200ml PET jar, 70mm mouth",
+    "moq": 1000,
+    "attrs": {
+      "material": "PET",
+      "colour": "clear",
+      "form": "jar",
+      "volume_ml": 200,
+      "neck_mm": 70
+    }
+  },
+  {
+    "id": "CTN-KRF-090090120",
+    "description": "Kraft carton 90x90x120mm",
+    "moq": 5000,
+    "attrs": {
+      "material": "kraft",
+      "form": "carton",
+      "dimensions_mm": "90x90x120"
+    }
+  },
+  {
+    "id": "POU-STD-100-ZIP",
+    "description": "100g stand-up zip pouch",
+    "moq": 5000,
+    "attrs": {
+      "material": "laminate",
+      "form": "pouch",
+      "weight_g": 100
+    }
+  }
+]

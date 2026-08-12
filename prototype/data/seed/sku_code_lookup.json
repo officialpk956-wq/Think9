@@ -1,0 +1,17 @@
+[
+  {
+    "vendor_gstin": "24AAACR5055K1Z5",
+    "sku_code": "GB-AMB-50-20N",
+    "canonical_id": "GLS-AMB-050-20"
+  },
+  {
+    "vendor_gstin": "29AAGCD2287M1ZP",
+    "sku_code": "DCN-CAP20-WHT",
+    "canonical_id": "CAP-PP-20-WHT"
+  },
+  {
+    "vendor_gstin": "29AAGCD2287M1ZP",
+    "sku_code": "DCN-PMP24-WHT",
+    "canonical_id": "PMP-LOT-24-WHT"
+  }
+]

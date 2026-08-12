@@ -1,0 +1,272 @@
+[
+  {
+    "canonical_id": "GLS-AMB-050-20",
+    "vendor_gstin": "24AAACR5055K1Z5",
+    "brand": "Neude",
+    "unit_price": 22.2,
+    "qty": 500,
+    "lead_time_days": 24,
+    "observed_at": "2026-05-18"
+  },
+  {
+    "canonical_id": "GLS-AMB-050-20",
+    "vendor_gstin": "24AAACR5055K1Z5",
+    "brand": "Panchamrit",
+    "unit_price": 21.8,
+    "qty": 600,
+    "lead_time_days": 25,
+    "observed_at": "2026-06-12"
+  },
+  {
+    "canonical_id": "GLS-AMB-050-20",
+    "vendor_gstin": "24AAACR5055K1Z5",
+    "brand": "Beauty by Bie",
+    "unit_price": 22.4,
+    "qty": 450,
+    "lead_time_days": 25,
+    "observed_at": "2026-07-05"
+  },
+  {
+    "canonical_id": "GLS-AMB-050-20",
+    "vendor_gstin": "24AACCG9862P1ZX",
+    "brand": "Neude",
+    "unit_price": 21.0,
+    "qty": 700,
+    "lead_time_days": 20,
+    "observed_at": "2026-05-27"
+  },
+  {
+    "canonical_id": "GLS-AMB-050-20",
+    "vendor_gstin": "24AACCG9862P1ZX",
+    "brand": "Beauty by Bie",
+    "unit_price": 20.9,
+    "qty": 800,
+    "lead_time_days": 20,
+    "observed_at": "2026-06-20"
+  },
+  {
+    "canonical_id": "GLS-AMB-050-20",
+    "vendor_gstin": "24AACCG9862P1ZX",
+    "brand": "Neude",
+    "unit_price": 21.2,
+    "qty": 600,
+    "lead_time_days": 21,
+    "observed_at": "2026-07-08"
+  },
+  {
+    "canonical_id": "GLS-AMB-048-20",
+    "vendor_gstin": "24AAACR5055K1Z5",
+    "brand": "SuperYou",
+    "unit_price": 19.2,
+    "qty": 1000,
+    "lead_time_days": 22,
+    "observed_at": "2026-05-22"
+  },
+  {
+    "canonical_id": "GLS-AMB-048-20",
+    "vendor_gstin": "24AAACR5055K1Z5",
+    "brand": "SuperYou",
+    "unit_price": 19.1,
+    "qty": 1200,
+    "lead_time_days": 22,
+    "observed_at": "2026-06-30"
+  },
+  {
+    "canonical_id": "GLS-AMB-100-24",
+    "vendor_gstin": "24AACCG9862P1ZX",
+    "brand": "Panchamrit",
+    "unit_price": 27.5,
+    "qty": 300,
+    "lead_time_days": 20,
+    "observed_at": "2026-05-25"
+  },
+  {
+    "canonical_id": "GLS-AMB-100-24",
+    "vendor_gstin": "24AACCG9862P1ZX",
+    "brand": "Panchamrit",
+    "unit_price": 27.8,
+    "qty": 350,
+    "lead_time_days": 20,
+    "observed_at": "2026-07-02"
+  },
+  {
+    "canonical_id": "CAP-PP-20-WHT",
+    "vendor_gstin": "27AABCS1429B1ZQ",
+    "brand": "Neude",
+    "unit_price": 2.15,
+    "qty": 500,
+    "lead_time_days": 15,
+    "observed_at": "2026-05-20"
+  },
+  {
+    "canonical_id": "CAP-PP-20-WHT",
+    "vendor_gstin": "27AABCS1429B1ZQ",
+    "brand": "Beauty by Bie",
+    "unit_price": 2.12,
+    "qty": 550,
+    "lead_time_days": 15,
+    "observed_at": "2026-06-18"
+  },
+  {
+    "canonical_id": "CAP-PP-20-WHT",
+    "vendor_gstin": "27AABCS1429B1ZQ",
+    "brand": "Neude",
+    "unit_price": 2.14,
+    "qty": 500,
+    "lead_time_days": 16,
+    "observed_at": "2026-07-09"
+  },
+  {
+    "canonical_id": "CAP-PP-20-WHT",
+    "vendor_gstin": "29AAGCD2287M1ZP",
+    "brand": "Panchamrit",
+    "unit_price": 1.98,
+    "qty": 600,
+    "lead_time_days": 14,
+    "observed_at": "2026-05-29"
+  },
+  {
+    "canonical_id": "CAP-PP-20-WHT",
+    "vendor_gstin": "29AAGCD2287M1ZP",
+    "brand": "Goodbug",
+    "unit_price": 1.95,
+    "qty": 700,
+    "lead_time_days": 14,
+    "observed_at": "2026-06-25"
+  },
+  {
+    "canonical_id": "CAP-PP-20-WHT",
+    "vendor_gstin": "29AAGCD2287M1ZP",
+    "brand": "Goodbug",
+    "unit_price": 2.0,
+    "qty": 500,
+    "lead_time_days": 15,
+    "observed_at": "2026-07-11"
+  },
+  {
+    "canonical_id": "PMP-LOT-24-WHT",
+    "vendor_gstin": "27AABCS1429B1ZQ",
+    "brand": "Beauty by Bie",
+    "unit_price": 8.6,
+    "qty": 400,
+    "lead_time_days": 17,
+    "observed_at": "2026-05-19"
+  },
+  {
+    "canonical_id": "PMP-LOT-24-WHT",
+    "vendor_gstin": "27AABCS1429B1ZQ",
+    "brand": "Neude",
+    "unit_price": 8.55,
+    "qty": 350,
+    "lead_time_days": 18,
+    "observed_at": "2026-06-15"
+  },
+  {
+    "canonical_id": "PMP-LOT-24-WHT",
+    "vendor_gstin": "27AABCS1429B1ZQ",
+    "brand": "Beauty by Bie",
+    "unit_price": 8.7,
+    "qty": 400,
+    "lead_time_days": 18,
+    "observed_at": "2026-07-07"
+  },
+  {
+    "canonical_id": "PMP-LOT-24-WHT",
+    "vendor_gstin": "29AAGCD2287M1ZP",
+    "brand": "Neude",
+    "unit_price": 7.8,
+    "qty": 300,
+    "lead_time_days": 15,
+    "observed_at": "2026-06-05"
+  },
+  {
+    "canonical_id": "PMP-LOT-24-WHT",
+    "vendor_gstin": "29AAGCD2287M1ZP",
+    "brand": "Neude",
+    "unit_price": 7.75,
+    "qty": 300,
+    "lead_time_days": 15,
+    "observed_at": "2026-07-03"
+  },
+  {
+    "canonical_id": "JAR-PET-200-70",
+    "vendor_gstin": "27AABCS1429B1ZQ",
+    "brand": "Neude",
+    "unit_price": 11.5,
+    "qty": 600,
+    "lead_time_days": 15,
+    "observed_at": "2026-05-21"
+  },
+  {
+    "canonical_id": "JAR-PET-200-70",
+    "vendor_gstin": "27AABCS1429B1ZQ",
+    "brand": "Neude",
+    "unit_price": 11.8,
+    "qty": 500,
+    "lead_time_days": 15,
+    "observed_at": "2026-06-16"
+  },
+  {
+    "canonical_id": "JAR-PET-200-70",
+    "vendor_gstin": "27AABCS1429B1ZQ",
+    "brand": "Neude",
+    "unit_price": 12.0,
+    "qty": 600,
+    "lead_time_days": 16,
+    "observed_at": "2026-07-06"
+  },
+  {
+    "canonical_id": "CTN-KRF-090090120",
+    "vendor_gstin": "27AADCE7734L1ZR",
+    "brand": "SuperYou",
+    "unit_price": 6.4,
+    "qty": 2000,
+    "lead_time_days": 12,
+    "observed_at": "2026-05-16"
+  },
+  {
+    "canonical_id": "CTN-KRF-090090120",
+    "vendor_gstin": "27AADCE7734L1ZR",
+    "brand": "Goodbug",
+    "unit_price": 6.55,
+    "qty": 1500,
+    "lead_time_days": 12,
+    "observed_at": "2026-06-11"
+  },
+  {
+    "canonical_id": "CTN-KRF-090090120",
+    "vendor_gstin": "27AADCE7734L1ZR",
+    "brand": "Neude",
+    "unit_price": 6.3,
+    "qty": 1800,
+    "lead_time_days": 13,
+    "observed_at": "2026-07-04"
+  },
+  {
+    "canonical_id": "CTN-KRF-090090120",
+    "vendor_gstin": "27AADCE7734L1ZR",
+    "brand": "Panchamrit",
+    "unit_price": 6.45,
+    "qty": 1000,
+    "lead_time_days": 12,
+    "observed_at": "2026-07-10"
+  },
+  {
+    "canonical_id": "POU-STD-100-ZIP",
+    "vendor_gstin": "27AAECM4521N1ZK",
+    "brand": "SuperYou",
+    "unit_price": 3.1,
+    "qty": 3000,
+    "lead_time_days": 18,
+    "observed_at": "2026-05-24"
+  },
+  {
+    "canonical_id": "POU-STD-100-ZIP",
+    "vendor_gstin": "27AAECM4521N1ZK",
+    "brand": "Goodbug",
+    "unit_price": 3.15,
+    "qty": 2500,
+    "lead_time_days": 18,
+    "observed_at": "2026-06-22"
+  }
+]

@@ -1,0 +1,327 @@
+
+==============================================================================
+L0 / L1  --  INGEST & EXTRACTION
+==============================================================================
+12 vendor artifacts ingested: 3 pdf, 3 csv, 2 email, 3 whatsapp, 1 xlsx
+27 line items extracted
+Reference date: 2026-08-11 (pinned, so quote validity stays meaningful)
+
+Extraction confidence distribution:
+   >= 0.90   auto-advance         26
+   0.60-0.90  human review queue  0
+   <  0.60   reject to human      1
+
+==============================================================================
+L2  --  RESOLUTION: five names, one physical object
+==============================================================================
+Brand         Source                        As written                      Method            Conf
+--------------------------------------------------------------------------------------------------
+Neude         rajkot_glass_q3.pdf           50ml Amber Glass Bottle, 20mm   exact_signature   1.00
+Beauty by Bie gujarat_glass_quote.pdf       Amber Boston Round 50 ML (20/4  exact_signature   1.00
+Neude         email_gujarat_glass.txt       Glass bottle - amber - 50cc -   exact_signature   1.00
+Panchamrit    whatsapp_rajkot.txt           GB-AMB-50-20N                   sku_code_lookup   0.95
+Goodbug       whatsapp_goodbug_hindi.txt    एम्बर ग्लास बॉटल 50ml 20mm - 7  exact_signature   1.00
+--------------------------------------------------------------------------------------------------
+5 line items | 4 brands (Beauty by Bie, Goodbug, Neude, Panchamrit) | 2,550 units of requirement
+ALL RESOLVE TO:  GLS-AMB-050-20  --  50ml amber glass bottle, 20mm neck
+(Neude is quoted twice for the same 800-unit requirement - counted once, not summed.)
+
+==============================================================================
+DISCRIMINATION CHECK  --  watching a wrong merge get refused
+==============================================================================
+Line item:  '48ml Amber Glass Bottle, 20mm neck'
+            SuperYou / rajkot_glass_q3.pdf
+
+  Candidate GLS-AMB-050-20  (50ml amber glass bottle, 20mm neck)
+      description similarity: 85%   (rapidfuzz token_set_ratio, stage-4 threshold 85)
+      material          glass       vs glass       agree
+      colour            amber       vs amber       agree
+      form              bottle      vs bottle      agree
+      volume_ml         48          vs 50          *** CONTRADICTS ***
+      neck_mm           20          vs 20          agree
+      closure_included  -           vs False       not stated - compatible
+      VERDICT: REJECTED by the contradiction rule.
+      Every other attribute agrees, and description similarity clears the
+      stage-4 threshold (85 vs 85) - a purely text-based matcher merges these two.
+      None of that counts: volume_ml 48 != 50, both explicitly stated, both <= 100ml
+      where exact match is required and no tolerance band applies.
+      A shared description is evidence for a match; a disagreeing attribute is
+      proof against one, and proof beats evidence.
+
+  Candidate GLS-AMB-048-20  (48ml amber glass bottle, 20mm neck)
+      description similarity: 91%   (rapidfuzz token_set_ratio, stage-4 threshold 85)
+      material          glass       vs glass       agree
+      colour            amber       vs amber       agree
+      form              bottle      vs bottle      agree
+      volume_ml         48          vs 48          agree
+      neck_mm           20          vs 20          agree
+      VERDICT: ACCEPTED at confidence 1.00 (method=exact_signature).
+
+Had the 48ml merged into GLS-AMB-050-20, it would have added 1,000 phantom units
+to the bundle below and corrupted every price comparison on that SKU thereafter.
+
+==============================================================================
+GATE 1 QUEUE  --  held for human approval
+==============================================================================
+  [reject_low_confidence]  SuperYou / whatsapp_deccan.txt
+      'pump wala jo pehle bheja tha, rate thoda kam kar do'
+      reason: extraction_confidence=0.40 - too little extracted to resolve
+
+  [new_canonical_proposed]  SuperYou / mumbai_flexipack.csv
+      'Printed BOPP Label Roll 50x30mm'
+      reason: No existing canonical SKU matches this description without contradiction
+
+  [review]  Panchamrit / whatsapp_rajkot.txt
+      'Also send rate for bottle - 50 - amber, need 300 pcs'
+      reason: Matches 3 canonicals equally well (GLS-AMB-050-20, GLS-AMB-100-24, GLS-
+              AMB-048-20) - too few stated attributes to distinguish them
+
+  [new_canonical_proposed]  Neude / neude_vendor_compare.xlsx
+      'Airless Pump Bottle, 30ml, White'
+      reason: No existing canonical SKU matches this description without contradiction
+
+4 items held. The agent does not guess past this point: a wrong canonical
+merge silently corrupts every downstream recommendation, so ambiguity routes to a human.
+
+==============================================================================
+COVERAGE
+==============================================================================
+Resolved 23/27 line items (85%). 4 held for human review.
+Reported as measured. The resolver was written before the quote data existed and
+has not been tuned against it - the misses above are real and are the honest number.
+
+==============================================================================
+L3  --  PORTFOLIO SPEC GRAPH
+==============================================================================
+  canonical_sku=8   vendor=6   brand=5   quote=12
+  line_item=27   brand_sku_edge=20   price_history=30
+
+  price_history holds 90 days of backfilled POs - without it the price-outlier and
+  lead-time detectors have no baseline and the system looks useless in week one.
+
+==============================================================================
+L4  --  OPPORTUNITIES (ranked: time-critical first, then rupee impact)
+==============================================================================
+#1  [moq_bundling]  Rs 13,255.00  (saving)  [EXPIRING]
+    Bundle 4 brands on GLS-AMB-050-20 (50ml amber glass bottle, 20mm neck)
+    today, each brand buying separately and each below MOQ:
+        Neude            800 x Rs  20.75 = Rs  16,600.00  Gujarat Glass & Containers [+1 competing]
+        Beauty by Bie    600 x Rs  21.50 = Rs  12,900.00  Gujarat Glass & Containers 
+        Panchamrit       450 x Rs  22.50 = Rs  10,125.00  Rajkot Glass Works         
+        Goodbug          700 x Rs  22.80 = Rs  15,960.00  Rajkot Glass Works         
+        requirement    2,550 units           Rs  55,585.00
+
+    one requirement per brand - competing quotes for the same requirement are
+    counted once at the best price, never summed as extra volume
+
+    combined volume = 2,550 units  vs MOQ 2,500  -> clears MOQ
+    best price seen = Rs 20.75 @ 800 units (Gujarat Glass & Containers, Neude)
+      that order is 32% of MOQ -> carries a 25% sub-MOQ premium
+    base price      = Rs 20.75 / 1.25 = Rs 16.60
+    consolidated    = 2,550 x Rs 16.60 = Rs 42,330.00
+    SAVING          = Rs 55,585.00 - Rs 42,330.00 = Rs 13,255.00
+
+#2  [expiry_pressure]  Rs 13,255.00  (exposure, not additive)  [EXPIRING]
+    Rs 13,255 on GLS-AMB-050-20 lapses in 1 day
+    earliest lapse = 2026-08-12 (Gujarat Glass & Containers, Neude)
+    days remaining = 1  (window 7 days)
+    AT RISK        = Rs 13,255.00 of bundling saving
+                   once this quote lapses the bundle has to be re-quoted from scratch
+
+#3  [moq_bundling]  Rs 3,308.33  (saving)  [EXPIRING]
+    Bundle 2 brands on POU-STD-100-ZIP (100g stand-up zip pouch)
+    today, each brand buying separately and each below MOQ:
+        SuperYou       3,000 x Rs   3.20 = Rs   9,600.00  Mumbai Flexipack           
+        Goodbug        2,500 x Rs   3.35 = Rs   8,375.00  Mumbai Flexipack           [CM-embedded]
+        requirement    5,500 units           Rs  17,975.00
+
+    one requirement per brand - competing quotes for the same requirement are
+    counted once at the best price, never summed as extra volume
+
+    combined volume = 5,500 units  vs MOQ 5,000  -> clears MOQ
+    best price seen = Rs 3.20 @ 3,000 units (Mumbai Flexipack, SuperYou)
+      that order is 60% of MOQ -> carries a 20% sub-MOQ premium
+    base price      = Rs 3.20 / 1.20 = Rs 2.67
+    consolidated    = 5,500 x Rs 2.67 = Rs 14,666.67
+    SAVING          = Rs 17,975.00 - Rs 14,666.67 = Rs 3,308.33
+    note            2,500 of these units are CM-embedded - that volume needs the
+                    contract manufacturer's agreement, not just a Think9 PO
+
+#4  [expiry_pressure]  Rs 3,308.33  (exposure, not additive)  [EXPIRING]
+    Rs 3,308 on POU-STD-100-ZIP lapses in 5 days
+    earliest lapse = 2026-08-16 (Mumbai Flexipack, SuperYou)
+    days remaining = 5  (window 7 days)
+    AT RISK        = Rs 3,308.33 of bundling saving
+                   once this quote lapses the bundle has to be re-quoted from scratch
+
+#5  [price_outlier]  Rs 1,500.00  (saving)  [EXPIRING]
+    Neude paying 22% above portfolio best on JAR-PET-200-70
+    best available = Rs 14.00 @ 600 units (Shree Packaging Industries, Neude)
+    portfolio best = Rs 11.50 (historical PO, same SKU)
+    gap            = 21.7%  (threshold 15%)
+    SAVING         = 600 x (Rs 14.00 - Rs 11.50) = Rs 1,500.00
+
+#6  [moq_bundling]  Rs 1,144.17  (saving)  [EXPIRING]
+    Bundle 2 brands on PMP-LOT-24-WHT (24mm white lotion pump)
+    today, each brand buying separately and each below MOQ:
+        Neude            300 x Rs   7.75 = Rs   2,325.00  Deccan Closures            
+        Beauty by Bie    400 x Rs   8.35 = Rs   3,340.00  Shree Packaging Industries [+1 competing]
+        requirement      700 units           Rs   5,665.00
+
+    one requirement per brand - competing quotes for the same requirement are
+    counted once at the best price, never summed as extra volume
+
+    combined volume = 700 units  vs MOQ 600  -> clears MOQ
+    best price seen = Rs 7.75 @ 300 units (Deccan Closures, Neude)
+      that order is 50% of MOQ -> carries a 20% sub-MOQ premium
+    base price      = Rs 7.75 / 1.20 = Rs 6.46
+    consolidated    = 700 x Rs 6.46 = Rs 4,520.83
+    SAVING          = Rs 5,665.00 - Rs 4,520.83 = Rs 1,144.17
+
+#7  [expiry_pressure]  Rs 1,144.17  (exposure, not additive)  [EXPIRING]
+    Rs 1,144 on PMP-LOT-24-WHT lapses in 7 days
+    earliest lapse = 2026-08-18 (Deccan Closures, Neude)
+    days remaining = 7  (window 7 days)
+    AT RISK        = Rs 1,144.17 of bundling saving
+                   once this quote lapses the bundle has to be re-quoted from scratch
+
+#8  [moq_bundling]  Rs 1,005.10  (saving)  [EXPIRING]
+    Bundle 4 brands on CAP-PP-20-WHT (20mm white PP screw cap)
+    today, each brand buying separately and each below MOQ:
+        Goodbug          500 x Rs   1.92 = Rs     960.00  Deccan Closures            [+1 competing]
+        Panchamrit       600 x Rs   1.95 = Rs   1,170.00  Deccan Closures            
+        Beauty by Bie    550 x Rs   2.05 = Rs   1,127.50  Shree Packaging Industries 
+        Neude            500 x Rs   2.10 = Rs   1,050.00  Shree Packaging Industries 
+        requirement    2,150 units           Rs   4,307.50
+
+    one requirement per brand - competing quotes for the same requirement are
+    counted once at the best price, never summed as extra volume
+
+    combined volume = 2,150 units  vs MOQ 2,000  -> clears MOQ
+    best price seen = Rs 1.92 @ 500 units (Deccan Closures, Goodbug)
+      that order is 25% of MOQ -> carries a 25% sub-MOQ premium
+    base price      = Rs 1.92 / 1.25 = Rs 1.54
+    consolidated    = 2,150 x Rs 1.54 = Rs 3,302.40
+    SAVING          = Rs 4,307.50 - Rs 3,302.40 = Rs 1,005.10
+
+#9  [expiry_pressure]  Rs 1,005.10  (exposure, not additive)  [EXPIRING]
+    Rs 1,005 on CAP-PP-20-WHT lapses in 2 days
+    earliest lapse = 2026-08-13 (Shree Packaging Industries, Neude)
+    days remaining = 2  (window 7 days)
+    AT RISK        = Rs 1,005.10 of bundling saving
+                   once this quote lapses the bundle has to be re-quoted from scratch
+
+#10  [vendor_concentration]  Rs 50,460.00  (exposure, not additive)
+    Everest Cartons is sole source for 5 brands on CTN-KRF-090090120
+    brands exposed = Beauty by Bie, Goodbug, Neude, Panchamrit, SuperYou
+    qualified alternate vendors quoting this SKU = 0
+    EXPOSURE       = Rs 50,460.00 of live quoted spend behind one vendor
+    risk           a disruption at this vendor stops packaging for the whole portfolio,
+                   and consolidating volume here would deepen the dependency
+
+#11  [moq_bundling]  Rs 11,460.00  (saving)
+    Bundle 5 brands on CTN-KRF-090090120 (Kraft carton 90x90x120mm)
+    today, each brand buying separately and each below MOQ:
+        SuperYou       2,000 x Rs   6.50 = Rs  13,000.00  Everest Cartons            [CM-embedded]
+        Neude          1,800 x Rs   6.60 = Rs  11,880.00  Everest Cartons            
+        Goodbug        1,500 x Rs   6.80 = Rs  10,200.00  Everest Cartons            
+        Beauty by Bie  1,200 x Rs   6.90 = Rs   8,280.00  Everest Cartons            
+        Panchamrit     1,000 x Rs   7.10 = Rs   7,100.00  Everest Cartons            
+        requirement    7,500 units           Rs  50,460.00
+
+    one requirement per brand - competing quotes for the same requirement are
+    counted once at the best price, never summed as extra volume
+
+    combined volume = 7,500 units  vs MOQ 5,000  -> clears MOQ
+    best price seen = Rs 6.50 @ 2,000 units (Everest Cartons, SuperYou)
+      that order is 40% of MOQ -> carries a 25% sub-MOQ premium
+    base price      = Rs 6.50 / 1.25 = Rs 5.20
+    consolidated    = 7,500 x Rs 5.20 = Rs 39,000.00
+    SAVING          = Rs 50,460.00 - Rs 39,000.00 = Rs 11,460.00
+    note            2,000 of these units are CM-embedded - that volume needs the
+                    contract manufacturer's agreement, not just a Think9 PO
+
+#12  [lead_time_drift]  Rs 3,340.00  (exposure, not additive)
+    Shree Packaging Industries lead time on PMP-LOT-24-WHT up 25% vs its own history
+    quoted now     = 22 days (Beauty by Bie, email_shree_revised.txt)
+    trailing mean  = 17.7 days from historical POs with this vendor
+    DRIFT          = +25%  (threshold 20%)
+    read           capacity tightening or deprioritisation - worth raising before it
+                   becomes a stockout, and worth pricing into any consolidation
+
+
+==============================================================================
+L5  --  NEGOTIATION BRIEF (top opportunity)
+==============================================================================
+==============================================================================
+NEGOTIATION BRIEF  |  GLS-AMB-050-20
+==============================================================================
+Spec          50ml amber glass bottle, 20mm neck
+Counterparty  Gujarat Glass & Containers  (GSTIN 24AACCG9862P1ZX)
+Prepared      2026-08-11   Earliest quote lapse: 2026-08-12 (1 day)
+
+PARTICIPATING BRANDS  (one requirement each; competing quotes shown as alternates)
+------------------------------------------------------------------------------
+  Brand              Qty     Price    Line value  Mode         Vendor
+  Neude              800  Rs 20.75  Rs 16,600.00  direct       Gujarat Glass & Containers
+    alternate             Rs 22.00   not counted               Rajkot Glass Works
+  Beauty by Bie      600  Rs 21.50  Rs 12,900.00  direct       Gujarat Glass & Containers
+  Panchamrit         450  Rs 22.50  Rs 10,125.00  direct       Rajkot Glass Works
+  Goodbug            700  Rs 22.80  Rs 15,960.00  direct       Rajkot Glass Works
+------------------------------------------------------------------------------
+  TOTAL            2,550            Rs 55,585.00
+
+VOLUME POSITION
+------------------------------------------------------------------------------
+  Consolidated volume   2,550 units
+  MOQ for this SKU      2,500 units
+  Status                clears MOQ by 50 units  (102% of MOQ)
+  Individually          every brand is below MOQ and paying the sub-MOQ premium
+
+PRICE INTELLIGENCE
+------------------------------------------------------------------------------
+  Best live quote                 Rs 20.75  (Gujarat Glass & Containers, 800 units)
+  Portfolio best ever achieved    Rs 20.90
+  This vendor's own floor         Rs 20.90   (their historical low, same SKU)
+
+BATNA - ALTERNATE QUALIFIED VENDORS
+------------------------------------------------------------------------------
+  Rajkot Glass Works             live Rs 22.00, historical low Rs 21.80
+  -> volume is movable. Do not disclose consolidated volume until commit.
+
+RISK NOTES
+------------------------------------------------------------------------------
+  LEAD TIME   Gujarat Glass & Containers trailing mean 20.3 days on this SKU; quoted now 20 days
+
+TARGET
+------------------------------------------------------------------------------
+  Target price          Rs 16.60 / unit
+  Reasoning             best live price is Rs 20.75 at 800 units, which is
+                        32% of MOQ and therefore carries a 25% sub-MOQ premium.
+                        Removing that premium: Rs 20.75 / 1.25 = Rs 16.60.
+                        At 2,550 units the order clears MOQ, so the premium
+                        should not apply at all.
+  Sanity check          target is below the portfolio's best-ever Rs 20.90 - treat
+                        as a stretch anchor, not a walk-away number.
+  Expected saving       Rs 13,255.00 vs current separate ordering
+
+==============================================================================
+AWAITING HUMAN APPROVAL - GATE 2. This system does not commit spend.
+It has not contacted this vendor and will not. Gate 3 covers vendor communication:
+a category manager sends anything that leaves the building.
+==============================================================================
+
+==============================================================================
+PORTFOLIO TOTAL
+==============================================================================
+  moq_bundling        GLS-AMB-050-20      Rs    13,255.00
+  moq_bundling        CTN-KRF-090090120   Rs    11,460.00
+  moq_bundling        POU-STD-100-ZIP     Rs     3,308.33
+  price_outlier       JAR-PET-200-70      Rs     1,500.00
+  moq_bundling        PMP-LOT-24-WHT      Rs     1,144.17
+  moq_bundling        CAP-PP-20-WHT       Rs     1,005.10
+------------------------------------------------------------------------------
+  Total portfolio savings identified from 12 quotes: Rs 31,672.60
+
+  Risk findings (concentration, lead-time drift, expiry) are excluded from this
+  total - they quantify exposure against spend already counted, not new money.

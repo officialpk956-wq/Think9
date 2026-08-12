@@ -1,0 +1,23 @@
+From: sales@shreepackaging.example
+To: procurement@beautybybie.example
+Date: 02 Aug 2026
+Subject: RE: Revised rates
+
+Hi,
+
+Following our call, please find revised rates below.
+
+---
+
+Item: 20mm White PP Screw Cap
+Revised rate: Rs 2.05 per piece for 550 pcs. MOQ remains 2000 units. Lead time 16 days.
+
+---
+
+Item: 24mm White Lotion Pump
+Revised rate: Rs 8.35 per piece for 400 pcs. MOQ 600 units. Lead time now 22 days.
+
+---
+
+Regards,
+Shree Packaging Industries

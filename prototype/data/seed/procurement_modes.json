@@ -1,0 +1,17 @@
+[
+  {
+    "brand": "Goodbug",
+    "canonical_id": "POU-STD-100-ZIP",
+    "procurement_mode": "cm_embedded"
+  },
+  {
+    "brand": "SuperYou",
+    "canonical_id": "CTN-KRF-090090120",
+    "procurement_mode": "cm_embedded"
+  },
+  {
+    "brand": "Panchamrit",
+    "canonical_id": "CAP-PP-20-WHT",
+    "procurement_mode": "unknown"
+  }
+]

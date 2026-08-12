@@ -1,0 +1,9 @@
+[Panchamrit Procurement]: Hi, need pricing for the amber bottles again
+[Rajkot Glass Works]: Sure - GB-AMB-50-20N, same as last time, 450 pcs?
+[Panchamrit Procurement]: Yes 450 pcs works, what's the rate
+[Rajkot Glass Works]: Rs 22.50/pc, MOQ 2500 as before, lead time 25 days
+
+---
+
+[Panchamrit Procurement]: Also send rate for bottle - 50 - amber, need 300 pcs
+[Rajkot Glass Works]: Rs 24/pc, MOQ 2500, lead time 25 days

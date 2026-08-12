@@ -1,0 +1,5 @@
+rapidfuzz
+pdfplumber
+reportlab
+openpyxl
+streamlit>=1.32
